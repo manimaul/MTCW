@@ -1,0 +1,8 @@
+remove 20000 scale from ALL
+re-run batch
+
+check all scale transitions in bsbScales.csv
+
+change regions to states
+
+allow multiple regions on mxmariner in mapview
