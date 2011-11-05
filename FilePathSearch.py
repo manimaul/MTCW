@@ -20,7 +20,7 @@ class FilePathSearch():
     def __mywalker(self, arg, dir, file):
         if self.filter == None:
             for f in file:
-                if f.endswith(self.extention):
+                if f.upper().endswith(self.extention):
                     self.filePaths.append(dir+"/"+f)
                     self.fileList.append(f)
         else:

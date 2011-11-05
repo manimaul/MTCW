@@ -34,14 +34,15 @@ class createTiles():
         thisone.wait()
         
         kstz = KapScaleToZoom(kapPath)
-        gmtPath = kapPath.rstrip(".KAP")+".gmt"
+        gmtPath = kapPath[0:-4]+".gmt"
+        #gmtPath = kapPath.rstrip(".KAP")+".gmt"
         print gmtPath, "\n"
         if os.path.isfile(gmtPath):
             command = "python /home/will/tilers_tools_plus/gdal_tiler_bsb2.py --overview-resampling=bilinear --base-resampling=near -t " + regiondir + \
                       " --cut --cutline " + gmtPath + " -z " + kstz.getZoom() + " " + kapPath
             #command = "python /home/will/tilers_tools_plus/gdal_tiler_bsb2.py -r -t " + regiondir + \
             #          " --cut --cutline " + gmtPath + " " + kapPath
-            destdir = regiondir + "/" + os.path.basename(kapPath).rstrip(".KAP")+".zxy"
+            destdir = regiondir + "/" + os.path.basename(kapPath)[0:-4]+".zxy"
             if not os.path.isdir(destdir):
                 thisone = subprocess.Popen(shlex.split(command), stdout=log)
                 thisone.wait()
@@ -61,14 +62,15 @@ class createTiles():
         thisone.wait()
         
         kstz = KapScaleToZoom(kapPath)
-        vrtPath = kapPath.rstrip(".KAP")+".vrt"
+        vrtPath = kapPath[0:-4]+".vrt"
+        #vrtPath = kapPath.rstrip(".KAP")+".vrt"
         print vrtPath, "\n"
         if os.path.isfile(vrtPath):
             command = "python /home/will/tilers_tools_plus/gdal_tiler_bsb2.py --overview-resampling=bilinear --base-resampling=near -t " + regiondir + \
                       " -c " + vrtPath + " -z " + kstz.getZoom()
             #command = "python /home/will/tilers_tools_plus/gdal_tiler_bsb2.py -r -t " + regiondir + \
             #          " -c " + vrtPath
-            destdir = regiondir + "/" + os.path.basename(kapPath).rstrip(".KAP")+".zxy"
+            destdir = regiondir + "/" + os.path.basename(kapPath)[0:-4]+".zxy"
             if not os.path.isdir(destdir):
                 print command
                 thisone = subprocess.Popen(shlex.split(command), stdout=log)
@@ -125,10 +127,15 @@ def vrtCheck(kapList):
     return missing
         
 if __name__== "__main__":
-    from NoaaXmlParser import NoaaXmlParser
-    region = "BSB_ALL"
-    dir = "/home/will/charts/BSB_ROOT"
+    region = "NZ_BSB_ALL"
+    dir = "/home/will/charts/NewZealand"
     regiondir = "/home/will/charts/" + region
-    filter = NoaaXmlParser(region).getKapFiles()    
-    createTiles(dir, regiondir, filter)
+    createTiles(dir, regiondir)
+
+#    from NoaaXmlParser import NoaaXmlParser
+#    region = "BSB_ALL"
+#    dir = "/home/will/charts/BSB_ROOT"
+#    regiondir = "/home/will/charts/" + region
+#    filter = NoaaXmlParser(region).getKapFiles()    
+#    createTiles(dir, regiondir, filter)
     
