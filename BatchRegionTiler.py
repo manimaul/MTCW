@@ -38,8 +38,8 @@ class createTiles():
         gmtPath = kapPath[0:-4]+".gmt"
         print gmtPath, "\n"
         if os.path.isfile(gmtPath):
-            command = "python %sgdal_tiler.py --overview-resampling=bilinear --base-resampling=bilinear -t " + regiondir + \
-                      " --cut --cutline " + gmtPath + " -z " + str(getKapZoom(kapPath)) + " " + kapPath %(Env.tilersToolsDir)
+            command = "python %sgdal_tiler.py --overview-resampling=bilinear --base-resampling=bilinear -t " %(Env.tilersToolsDir) + regiondir + \
+                      " --cut --cutline " + gmtPath + " -z " + str(getKapZoom(kapPath)) + " " + kapPath
             destdir = regiondir + "/" + os.path.basename(kapPath)[0:-4]+".zxy"
             #print destdir
             if not os.path.isdir(destdir):
@@ -63,8 +63,8 @@ class createTiles():
         #vrtPath = kapPath.rstrip(".KAP")+".vrt"
         print vrtPath, "\n"
         if os.path.isfile(vrtPath):
-            command = "python %sgdal_tiler_bsb2.py --overview-resampling=bilinear --base-resampling=bilinear -t " + regiondir + \
-                      " -c " + vrtPath + " -z " + str(getKapZoom(kapPath)) %(Env.tilersToolsDir)
+            command = "python %sgdal_tiler.py --overview-resampling=bilinear --base-resampling=bilinear -t " %(Env.tilersToolsDir) + regiondir + \
+                      " -c " + vrtPath + " -z " + str(getKapZoom(kapPath))
             destdir = regiondir + "/" + os.path.basename(kapPath)[0:-4]+".zxy"
             #print destdir
             if not os.path.isdir(destdir):
@@ -121,7 +121,8 @@ def vrtCheck(kapList):
     
 def renderRegion(region):
     filter = Regions.getRegionFilterList(region)
-    tileDir = Regions.getRegionTileDir(region)
+    print filter
+    tileDir = Regions.getRegionUnMergedTileDir(region)
     if filter != None:
         createTiles(Env.bsbDir, tileDir, filter)
     else:

@@ -26,7 +26,8 @@ descriptions = { \
 "REGION_32" : "South Central Alaska: Yakutat to Kodiak", \
 "REGION_34" : "Alaska: The Aleutians and Bristol Bay", \
 "REGION_36" : "Alaska: Norton Sound to Beaufort Sea", \
-"REGION_40" : "Hawaiian Islands and U.S. Territories"
+"REGION_40" : "Hawaiian Islands and U.S. Territories", \
+"REGION_BR" : "Brazil: Guyana to Uruguay"
 }
 
 NGA_01 = [ \
@@ -80,11 +81,11 @@ def getRegionFilterList(region):
         return ngaLinker[region]
     if NoaaXmlParser.xmlUrls.has_key(region):
         return NoaaXmlParser.NoaaXmlParser(region).getKapFiles()
-    if region is "REGION_BC":
+    if region == "REGION_BC":
         return os.listdir(Env.canadaBsbDir)
-    if region is "REGION_NZ":
+    if region == "REGION_NZ":
         return os.listdir(Env.newZelandBsbDir)
-    if region is "REGION_BR":
+    if region == "REGION_BR":
         return os.listdir(Env.brazilBsbDir)
     
 def _getRegionTileDir(region):
@@ -92,11 +93,11 @@ def _getRegionTileDir(region):
         return "NGA/"
     if NoaaXmlParser.xmlUrls.has_key(region):
         return "NOAA/"
-    if region is "REGION_BC":
+    if region == "REGION_BC":
         return "BC/"
-    if region is "REGION_NZ":
+    if region == "REGION_NZ":
         return "NZ/"
-    if region is "REGION_BR":
+    if region == "REGION_BR":
         return "BR/"
     
 def getRegionMergedTileDir(region):
