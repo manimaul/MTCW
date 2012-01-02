@@ -50,9 +50,11 @@ class BsbScales():
 
     def getChartsAtScale(self, scale):
         if self.scales.has_key(scale):
-            return self.scales[scale]
-        else:
-            return None
+            charts = []
+            for chart in self.scales[scale]:
+                charts.append(chart.split("/")[-1])
+                charts.sort()
+            return charts
         
     def getScaleList(self):
         keyList = self.scales.keys()
@@ -77,7 +79,9 @@ class BsbScales():
         keyList.reverse()
         for key in keyList:
             for scale in self.scales[key]:
-                lst.append(scale.split("/")[-1].rstrip(".KAP")+addExt)
+                item = scale.split("/")[-1].rstrip(".KAP")
+                item = item.rstrip(".kap")
+                lst.append(item+addExt)
         return lst
             
                
@@ -92,11 +96,20 @@ if __name__== "__main__":
 #        print dir, "is not a directory"
 #        sys.exit()
 
-    import os.path
+    import os.path, subprocess, shutil
     dir = "/home/will/charts/BSB_ROOT"
     bsbScales = BsbScales(dir)
-    lst = bsbScales.getChartsAtScale(20000)
-    tiledir = '/home/will/charts/BSB_ALL_LOWRES/'
+    tiledir = '/home/will/charts/BSB_ALL/'
+    #lst = bsbScales.getChartsAtScale(10000)
+    lst = os.listdir(tiledir)
+    i = 1;
     for ch in lst:
-        target = tiledir+os.path.basename(ch).rstrip("KAP")+"zxy"
-        print target
+        target = tiledir+os.path.basename(ch).rstrip("KAP")#+"zxy"
+        if os.path.isdir(target):
+#            shutil.rmtree(target)
+            i += 1;
+            if (i < 5):
+                command = ["firefox", target + "/viewer-google.html"]
+                subprocess.Popen(command)
+        else:
+            print "missing " + target

@@ -1,3 +1,35 @@
 Copyright (C) 2011 by Will Kamp <manimaul!gmail.com>
 Distributed under the terms of the Simplified BSD Licence.
 These are wrapper programs for tilers-tools, gdal and gemf
+designed to create gemf files from bsb charts
+
+Required programs:
+gdal 1.7+, pngnq, python, python imaging library (PIL)
+
+Optionally, if you use a more recent version of tilers-tools you should make the following customizations:
+(http://code.google.com/p/tilers-tools/)
+
+###################################################################################
+
+tiles_opt.py
+
+-   command(['pngnq','-n',options.colors,'-e','.png','-d',dpath,src])
++   command(['pngnq','-s1','-g2.2','-n',options.colors,'-e','.png','-d',dpath,src])
+
+###################################################################################
+
+reader_bsb_data.csv
+
+# KNP/ projection parameters
++proj_knp,UNKNOWN,                       PROJ4:+proj=merc,PP:lat_ts,
+
+###################################################################################
+
+map2gdal.py
+
+-        lines=[f.readline() for i in range(10)]
++        lines=[f.readline() for i in range(24)]
+
+###################################################################################
+
+

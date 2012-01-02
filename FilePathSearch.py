@@ -8,7 +8,7 @@ class FilePathSearch():
         """Searches for files ending in <extention> in <directory> and all subdirectories
            Optionally supply list of file names <filter> to only search for files in filter list
            Returns list of string paths"""
-        self.extention = extention
+        self.extention = extention.upper()
         self.filePaths = []
         self.fileList = []
         self.filter = filter
@@ -25,7 +25,7 @@ class FilePathSearch():
                     self.fileList.append(f)
         else:
             for f in file:
-                if f.endswith(self.extention) and ( self.filter.count(f) > 0 ):
+                if f.upper().endswith(self.extention) and ( self.filter.count(f) > 0 ):
                     self.filePaths.append(dir+"/"+f)
                     self.fileList.append(f)
         

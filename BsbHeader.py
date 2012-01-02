@@ -51,8 +51,8 @@ class BsbHeader():
                 if line.find("PLY/") > -1:
                     lat = line.split(",")[1].lstrip(',')
                     lon = float(line.split(",")[2])
-                    if lon > 0: #fix for osmdroid
-                        lon = lon - 360.0
+#                    if lon > 0: #fix for osmdroid
+#                        lon = lon - 360.0
                     ply = lat + "," + str(lon)
                     self.poly.append(ply.rstrip())
         if self.poly.__len__() > 0:
@@ -89,19 +89,30 @@ class BsbHeader():
         if self.units == None:
             self.units = "Unknown"
         return self.units
-            
+    
+    def getCenter(self):
+        lats = []
+        lons = []
+        for ll in self.poly:
+            lat, lon = ll.split(",")
+            lats.append(float(lat))
+            lons.append(float(lon))
+        centerlat =  min(lats) + (max(lats) - min(lats)) / 2
+        centerlon =  min(lons) + (max(lons) - min(lons)) / 2
+        return (centerlon, centerlat)
                
 if __name__== "__main__":
-    dir = "/home/will/charts/BSB_ROOT/1115A/1115A_1.KAP"
+    dir = "/home/will/charts/BSB_ROOT/16082/16082_1.KAP"
     header = BsbHeader(dir)
-    print header.getbasefile()
-    print header.getprojection()
-    print header.getscale()
-    print header.getupdated()
-    print header.getname()
-    print header.getPolyList()
-    print header.getOutline()
-    print header.getDepthUnits()
+    print header.getCenter()
+#    print header.getbasefile()
+#    print header.getprojection()
+#    print header.getscale()
+#    print header.getupdated()
+#    print header.getname()
+#    print header.getPolyList()
+#    print header.getOutline()
+#    print header.getDepthUnits()
 # for line in header.getlines():
 # print line
         
