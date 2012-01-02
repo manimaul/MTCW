@@ -1,0 +1,16 @@
+1. First read README to see requirements
+
+2. Run python Env.py to setup the directory structure
+
+3. Place BSB .kap files in corresponding directories specified in Env.py
+
+4. Run python BatchRegionTiler.py <REGION>
+   Note: See descriptions in Regions.py for available REGIONS
+
+5. Run python BatchRegionMerger.py <REGION>
+
+6. Run python BatchRegionOptimizer.py <REGION>
+
+7. Run python AutoGemf.py <REGION>
+
+8. Run python GenerateMxRegionData.py <REGION>
