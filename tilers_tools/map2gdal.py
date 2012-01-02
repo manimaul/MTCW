@@ -48,7 +48,7 @@ class_map=(
 
 def proc_src(src):
     with open(src,'rU') as f:
-        lines=[f.readline() for i in range(15)]
+        lines=[f.readline() for i in range(24)]
     for cls in class_map:
         patt=cls.magic
         if any((l.startswith(patt) for l in lines)):

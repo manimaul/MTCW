@@ -46,7 +46,8 @@ def counter():
 
 def optimize_png(src,dst,dpath):
     'optimize png using pngnq utility'
-    command(['pngnq','-n',options.colors,'-e','.png','-d',dpath,src])
+    #command(['pngnq','-n',options.colors,'-e','.png','-d',dpath,src])
+    command(['pngnq','-s1','-g2.2','-n',options.colors,'-e','.png','-d',dpath,src])
 
 def to_jpeg(src,dst,dpath):
     'convert to jpeg'

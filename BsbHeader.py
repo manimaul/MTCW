@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-
 import os.path
 
 class BsbHeader():
@@ -23,7 +22,6 @@ class BsbHeader():
                     break
                 line=line.decode('cp1252','ignore')
                 self.lines.append(line)
-                
                 if line.find("KNP/SC") > -1:
                     li = line.find("KNP/SC")+7
                     ri = line.find(",")
@@ -102,19 +100,12 @@ class BsbHeader():
         return (centerlon, centerlat)
                
 if __name__== "__main__":
-    dir = "/home/will/charts/BSB_ROOT/16082/16082_1.KAP"
-    header = BsbHeader(dir)
+    
+    header = BsbHeader("/home/will/zxyCharts/BSB_ROOT/BR_BSB_ROOT/210301.KAP")
+    print type(header.getname())
+    print header.getname()
+    print header.getupdated()
+    print header.getscale()
+    print header.getOutline()
+    print header.getDepthUnits()
     print header.getCenter()
-#    print header.getbasefile()
-#    print header.getprojection()
-#    print header.getscale()
-#    print header.getupdated()
-#    print header.getname()
-#    print header.getPolyList()
-#    print header.getOutline()
-#    print header.getDepthUnits()
-# for line in header.getlines():
-# print line
-        
-        
-        

@@ -111,19 +111,9 @@ def getRegionBsbDir(region):
         return Env.ngaBsbDir
     if NoaaXmlParser.xmlUrls.has_key(region):
         return Env.noaaBsbDir
-    if region is "REGION_BC":
+    if region == "REGION_BC":
         return Env.canadaBsbDir
-    if region is "REGION_NZ":
+    if region == "REGION_NZ":
         return Env.newZelandBsbDir
-    if region is "REGION_BR":
+    if region == "REGION_BR":
         return Env.brazilBsbDir
-    
-
-#if __name__== "__main__":
-#    from FilePathSearch import FilePathSearch
-#    filter = getRegionFilterList("NGA_01")
-#    if filter == None:
-#        sys.exit(0)
-#    kapPaths = FilePathSearch(Env.bsbDir, "kap", filter)
-#    for kPath in kapPaths.getfilePaths():
-#        print kPath

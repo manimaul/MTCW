@@ -1,8 +1,11 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from FilePathSearch import FilePathSearch
 from BsbHeader import BsbHeader
 
 class BsbOutlines():
-    def __init__(self, directory="/home/will/charts/BSB_ROOT", filter=None):
+    def __init__(self, directory, filter=None):
         self.data = {}
         fps = FilePathSearch(directory, 'KAP', filter)
         for map_file in fps.getfilePaths():
@@ -41,3 +44,13 @@ class BsbOutlines():
     
     def getzooms(self, key):
         return self.data[key][5]
+    
+if __name__== "__main__":
+    
+    bo = BsbOutlines("/home/will/zxyCharts/BSB_ROOT/BR_BSB_ROOT", "210301.KAP")
+    print type(bo.getname("210301.KAP"))
+    print bo.getname("210301.KAP")
+    print bo.getupdated("210301.KAP")
+    print bo.getscale("210301.KAP")
+    print bo.getoutline("210301.KAP")
+    print bo.getdepthunits("210301.KAP")

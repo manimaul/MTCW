@@ -438,8 +438,12 @@ class Pyramid(object):
 
                 metadata=src_ds.GetMetadata()
                 if metadata:
-                    mtd_lst=[xml_txt('MDI',metadata[mdkey].encode('utf-8'),4,key=mdkey) for mdkey in metadata]
-                    meta_txt=meta_templ % '\n'.join(mtd_lst)
+                    try:
+                        mtd_lst=[xml_txt('MDI',metadata[mdkey].encode('utf-8'),4,key=mdkey) for mdkey in metadata]
+                        meta_txt=meta_templ % '\n'.join(mtd_lst)
+                    except:
+                        print("error encoding meta data")
+                        meta_txt=''
                 else:
                     meta_txt=''
 

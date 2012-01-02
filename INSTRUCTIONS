@@ -6,6 +6,7 @@
 
 4. Run python BatchRegionTiler.py <REGION>
    Note: See descriptions in Regions.py for available REGIONS
+         List all the subdirectories of where the tiles were rendered; make sure each .zxy directory has 5 items
 
 5. Run python BatchRegionMerger.py <REGION>
 

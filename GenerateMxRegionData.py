@@ -2,7 +2,7 @@
 #-*- coding: utf-8 -*-
 # Copyright (C) 2010 by Will Kamp <manimaul!gmail.com>
 
-import os.path, time, sys
+import os.path, time, sys, codecs
 import BsbOutlines, Regions, Env
 
 # CREATE TABLE charts ( 
@@ -17,10 +17,10 @@ import BsbOutlines, Regions, Env
 
 
 #str0 = "UPDATE regions SET installeddate='%s' WHERE name='%s';\n"
-str0custom = "DELETE from regions WHERE name='%s';\n"
-str0custom2 = "INSERT into [regions] ([name], [description], [installeddate] ) VALUES ('%s', '%s', '%s');\n"
-str1 = "DELETE from charts where region='%s';\n"
-str2 = "INSERT INTO [charts] ([region], [file], [name], [updated], [scale], [outline], [depths]) VALUES ('%s', '%s', '%s', '%s', %s, '%s', '%s');\n"
+str0custom = u"DELETE from regions WHERE name='%s';\n"
+str0custom2 = u"INSERT into [regions] ([name], [description], [installeddate] ) VALUES ('%s', '%s', '%s');\n"
+str1 = u"DELETE from charts where region='%s';\n"
+str2 = u"INSERT INTO [charts] ([region], [file], [name], [updated], [scale], [outline], [depths]) VALUES ('%s', '%s', '%s', '%s', %s, '%s', '%s');\n"
 #dir = '/home/will/charts/gemfs_version2'
 #region = "REGION_40"
 #epoch = "1324500235"
@@ -32,10 +32,10 @@ def generateUpdate():
     lst = os.listdir(Env.gemfDir)
     lst.sort()
     
-    sqlstr = "update regions set latestdate='%s', size='%s' where name='%s';"
-    epoch = "1324500235"
+    sqlstr = u"update regions set latestdate='%s', size='%s' where name='%s';"
+    epoch = "u1324500235"
     #epoch = int(time.time())
-    sqlf.write("mx.mariner.update\n")
+    sqlf.write(u"mx.mariner.update\n")
     for p in lst:
         if p.endswith(".gemf"):
             size = str(os.path.getsize(p))
@@ -52,15 +52,16 @@ def generateRegion(region):
     print "generating data for " + region
     filter = Regions.getRegionFilterList(region)
     bo = BsbOutlines.BsbOutlines(Env.bsbDir, filter)
-    sqlf = open(Env.gemfDir+"/"+region+".data", "w")
-    sqlf.write("mx.mariner.data\n")
+    sqlf = codecs.open(Env.gemfDir+"/"+region+".data", "w", "utf-8")
+    #sqlf = open(Env.gemfDir+"/"+region+".data", "w")
+    sqlf.write(u"mx.mariner.data\n")
     sqlf.write(str0custom %(region))
     sqlf.write(str0custom2 %(region, Regions.descriptions[region], epoch))
     #sqlf.write( str0 %(epoch, region) )
     sqlf.write( str1 %(region) )
     for kapfile in bo.getkeys():
         sqlf.write( str2 %(region, kapfile, bo.getname(kapfile), bo.getupdated(kapfile), bo.getscale(kapfile), bo.getoutline(kapfile), bo.getdepthunits(kapfile)) )
-
+            
 def isEven(i):
     return i%2 and True or False
 
