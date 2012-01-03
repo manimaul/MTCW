@@ -1,6 +1,17 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+#read README and INSTRUCTIONS first... most importantly setup and run Env.py first and/or put NGA kap files in ~/zxyCharts/BSB_ROOT/NGA_BSB_ROOT/
+#this will create an organized directory structure of Physical** links to .kap files
+#but will keep original directory of kaps in place so we can still rsync
+#
+#now you can easily view particular sub-sections of nga charts in opencpn
+#
+# ~/zxyCharts/BSB_ROOT/NGA_BSB_ROOT/NGA_BSB_ORGANIZED_LINKS/
+#
+#** Physical links are hard links to soft links ... this is so opencpn will read kap file links
+
+
 import Env, FilePathSearch
 import os, subprocess, shlex
 

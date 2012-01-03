@@ -4,9 +4,7 @@
 import NoaaXmlParser, Env
 import os
 
-descriptions = { \
-"REGION_NGA_01" : "Mexico West Coast to Columbian Border", \
-"REGION_NGA_02" : "South America West Coast: Columbia to Cape Horn", \
+descriptions = {
 "REGION_02" : "Block Island RI to the Canadian Border", \
 "REGION_03" : "New York to Nantucket and Cape May NJ", \
 "REGION_04" : "Chesapeake and Delaware Bays", \
@@ -27,11 +25,35 @@ descriptions = { \
 "REGION_34" : "Alaska: The Aleutians and Bristol Bay", \
 "REGION_36" : "Alaska: Norton Sound to Beaufort Sea", \
 "REGION_40" : "Hawaiian Islands and U.S. Territories", \
-"REGION_BR" : "Brazil: Guyana to Uruguay"
+"REGION_BC_01" : "Canada West Coast", \
+"REGION_BR_01" : "Brazil: Guyana to Uruguay", \
+"REGION_NGA_01" : "Mexico West Coast to Columbian Border", \
+"REGION_NGA_02" : "South America West Coast: Columbia to Cape Horn", \
+"REGION_NZ_01" : "NewZealand"
 }
 
-def isNGARegion(region):
+def _isNGARegion(region):
     if os.path.isfile(Env.ngaRegionDir+region+".dat"):
+        return True
+    return False
+
+def _isNOAARegion(region):
+    if NoaaXmlParser.xmlUrls.has_key(region):
+        return True
+    return False
+
+def _isBrazilRegion(region):
+    if region.startswith("REGION_BR"):
+        return True
+    return False
+
+def _isCanadaRegion(region):
+    if region.startswith("REGION_BC"):
+        return True
+    return False
+
+def _isNewZealandRegion(region):
+    if region.startswith("REGION_NZ"):
         return True
     return False
 
@@ -46,11 +68,6 @@ def _getNGAFilterList(region):
         datFile.close()
     filterList.sort()
     return filterList
-        
-#ngaLinker = { \
-#"REGION_NGA01" : REGION_NGA01, \
-#"REGION_NGA02" : REGION_NGA02, \
-#}
 
 def printRegionList():
     regions = descriptions.keys()
@@ -59,27 +76,27 @@ def printRegionList():
         print region
 
 def getRegionFilterList(region):
-    if isNGARegion(region):
+    if _isNGARegion(region):
         return _getNGAFilterList(region)
-    if NoaaXmlParser.xmlUrls.has_key(region):
+    if _isNOAARegion(region):
         return NoaaXmlParser.NoaaXmlParser(region).getKapFiles()
-    if region == "REGION_BC":
+    if _isCanadaRegion(region):
         return os.listdir(Env.canadaBsbDir)
-    if region == "REGION_NZ":
+    if _isNewZealandRegion(region):
         return os.listdir(Env.newZelandBsbDir)
-    if region == "REGION_BR":
+    if _isBrazilRegion(region):
         return os.listdir(Env.brazilBsbDir)
     
 def _getRegionTileDir(region):
-    if isNGARegion(region):
+    if _isNGARegion(region):
         return "NGA/"
-    if NoaaXmlParser.xmlUrls.has_key(region):
+    if _isNOAARegion(region):
         return "NOAA/"
-    if region == "REGION_BC":
+    if _isCanadaRegion(region):
         return "BC/"
-    if region == "REGION_NZ":
+    if _isNewZealandRegion(region):
         return "NZ/"
-    if region == "REGION_BR":
+    if _isBrazilRegion(region):
         return "BR/"
     
 def getRegionMergedTileDir(region):
@@ -89,15 +106,15 @@ def getRegionUnMergedTileDir(region):
     return Env.unMergedTileDir + _getRegionTileDir(region)
     
 def getRegionBsbDir(region):
-    if isNGARegion(region):
+    if _isNGARegion(region):
         return Env.ngaBsbDir
-    if NoaaXmlParser.xmlUrls.has_key(region):
+    if _isNOAARegion(region):
         return Env.noaaBsbDir
-    if region == "REGION_BC":
+    if _isCanadaRegion(region):
         return Env.canadaBsbDir
-    if region == "REGION_NZ":
+    if _isNewZealandRegion(region):
         return Env.newZelandBsbDir
-    if region == "REGION_BR":
+    if _isBrazilRegion(region):
         return Env.brazilBsbDir
     
 if __name__== "__main__":

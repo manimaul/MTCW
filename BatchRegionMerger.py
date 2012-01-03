@@ -41,6 +41,7 @@ class mergeTiles():
         log.close()
     
 def mergeRegion(region):
+    print "merging: " + region
     mergeTiles(Regions.getRegionMergedTileDir(region), Regions.getRegionBsbDir(region), \
                Regions.getRegionUnMergedTileDir(region), Regions.getRegionFilterList(region))
         
