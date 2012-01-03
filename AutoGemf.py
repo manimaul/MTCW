@@ -6,6 +6,9 @@ import Env, Regions
 
 def createGemf(region):
     directory = Regions.getRegionMergedTileDir(region) + ".opt"
+    if not os.path.isdir(directory):
+        print "Region not ready... run BatchRegionOptimizer first"
+        sys.exit()
     if not os.path.isdir(directory + "/gemf"):
         os.mkdir(directory + "/gemf")
         if os.path.isdir(directory+"/merge"):

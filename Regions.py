@@ -29,6 +29,9 @@ descriptions = {
 "REGION_BR_01" : "Brazil: Guyana to Uruguay", \
 "REGION_NGA_01" : "Mexico West Coast to Columbian Border", \
 "REGION_NGA_02" : "South America West Coast: Columbia to Cape Horn", \
+"REGION_NGA_03" : "Antarctic and Drake Passage", \
+"REGION_NGA_04" : "South America East Coast: Cape Horn to Columbia", \
+"REGION_NGA_05" : "Bermuda Bahamas Caymans and Caribbean", \
 "REGION_NZ_01" : "NewZealand"
 }
 

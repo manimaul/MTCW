@@ -1,4 +1,5 @@
 #Antarctic and Drake Passage
+#need to override some zoom calculations for some small scale charts in this region in findZoom.py
 211.kap
 ##ALL 29000s were included, future 29000s should probably also be considered for inclusion
 29002.kap
@@ -7,7 +8,7 @@
 29122.kap
 29127.kap
 29200.kap
-29323.kap
+#29323.kap chart is transverse mercator...or ??? doesn't work in opencpn either???
 29018.kap
 29101.kap
 29123.kap

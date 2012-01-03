@@ -31,7 +31,7 @@ class createTiles():
         
     def doTile(self, kapPath, log, regiondir):
         command = "python %smap2gdal.py -q --cut-file %s" %(Env.tilersToolsDir, kapPath)
-        print command
+        #print command
         thisone = subprocess.Popen(shlex.split(command), stdout=log)
         thisone.wait()
         
@@ -121,10 +121,11 @@ def vrtCheck(kapList):
     
 def renderRegion(region):
     filter = Regions.getRegionFilterList(region)
-    print filter
+    #print filter
     tileDir = Regions.getRegionUnMergedTileDir(region)
+    bsbDir = Regions.getRegionBsbDir(region)
     if filter != None:
-        createTiles(Env.bsbDir, tileDir, filter)
+        createTiles(bsbDir, tileDir, filter)
     else:
         print region + " does not exist"
         
