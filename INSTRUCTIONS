@@ -15,11 +15,14 @@
 
 - Run python BatchRegionTiler.py <REGION>
    Note: Run python Regions.py to see available REGIONS
+         Process will stop if an error is found
    
 - Run python BatchRegionMerger.py <REGION>
+    Note: check mergelog.txt to make sure everything went well
 
 - Run python BatchRegionOptimizer.py <REGION>
 
 - Run python AutoGemf.py <REGION>
+    Note: check gemflog.txt to see details
 
 - Run python GenerateMxRegionData.py <REGION>
