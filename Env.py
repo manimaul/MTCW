@@ -2,8 +2,13 @@
 # -*- coding: utf-8 -*-
 
 import os
-
 home = os.getenv("HOME")
+
+######EDIT THIS ONLY###############
+#where this (MTCW) lives 
+mtcwDir = home + "/workspace/MTCW/"
+
+######YOU DON'T NEED TO EDIT ANYTHING ELSE
 
 #Output directory
 rootDir = home + "/zxyCharts/"
@@ -27,8 +32,12 @@ unMergedTileDir = tileDir + "unmerged/"
 #xml cache directory
 xmlCacheDir = rootDir + "xml/"
 
+
 #where tilers_tools is
-tilersToolsDir = home +"/workspace/MTCW/tilers_tools/"
+tilersToolsDir = mtcwDir + "tilers_tools/"
+
+#where nga region filters live
+ngaRegionDir = mtcwDir + "nga_regions/"
 
 if __name__== "__main__":
     print "Setting up MTCW directory structure."

@@ -1,17 +1,25 @@
-1. First read README to see requirements
+- First read README to see requirements
 
-2. Run python Env.py to setup the directory structure
+- Edit mtcwDir variable in Env.py to reflect where MTCW lives
 
-3. Place BSB .kap files in corresponding directories specified in Env.py
+- Run python Env.py to setup the directory structure
 
-4. Run python BatchRegionTiler.py <REGION>
-   Note: See descriptions in Regions.py for available REGIONS
-         List all the subdirectories of where the tiles were rendered; make sure each .zxy directory has 5 items
+- Place BSB .kap files in corresponding directories specified in Env.py
+  Note: you can have any subdirectory structure you want as long as the kap/KAP
+        files are in the corresponding root directory somewhere.
+    Brazilian HO charts go here: BR_BSB_ROOT
+    Canadian charts go here: BC_BSB_ROOT
+    new zealand charts go here: NZ_BSB_ROOT
+    opencpn.inf NGA charts go here: NGA_BSB_ROOT
+    noaa charts go here: NOAA_BSB_ROOT
 
-5. Run python BatchRegionMerger.py <REGION>
+- Run python BatchRegionTiler.py <REGION>
+   Note: Run python Regions.py to see available REGIONS
+   
+- Run python BatchRegionMerger.py <REGION>
 
-6. Run python BatchRegionOptimizer.py <REGION>
+- Run python BatchRegionOptimizer.py <REGION>
 
-7. Run python AutoGemf.py <REGION>
+- Run python AutoGemf.py <REGION>
 
-8. Run python GenerateMxRegionData.py <REGION>
+- Run python GenerateMxRegionData.py <REGION>
