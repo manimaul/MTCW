@@ -56,7 +56,7 @@ def generateRegion(region):
     #sqlf = open(Env.gemfDir+"/"+region+".data", "w")
     sqlf.write(u"mx.mariner.data\n")
     sqlf.write(str0custom %(region))
-    sqlf.write(str0custom2 %(region, Regions.descriptions[region], epoch))
+    sqlf.write(str0custom2 %(region, Regions.getRegionDescription(region), epoch))
     #sqlf.write( str0 %(epoch, region) )
     sqlf.write( str1 %(region) )
     for kapfile in bo.getkeys():
@@ -93,7 +93,7 @@ if __name__== "__main__":
             print "not yet implemented"
         elif arg == "PRINTARRAY":
             printByteItemArray()
-        elif Regions.descriptions.has_key(arg):
+        elif Regions.isRegion(arg):
             generateRegion(arg)
         else:
             print "invalid argument"

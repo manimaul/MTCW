@@ -4,6 +4,7 @@
 import NoaaXmlParser, Env
 import os
 
+#NGA region descriptions defined in REGION_NGA_##.dat
 descriptions = {
 "REGION_02" : "Block Island RI to the Canadian Border", \
 "REGION_03" : "New York to Nantucket and Cape May NJ", \
@@ -27,11 +28,6 @@ descriptions = {
 "REGION_40" : "Hawaiian Islands and U.S. Territories", \
 "REGION_BC_01" : "Canada West Coast", \
 "REGION_BR_01" : "Brazil: Guyana to Uruguay", \
-"REGION_NGA_01" : "Mexico West Coast to Columbian Border", \
-"REGION_NGA_02" : "South America West Coast: Columbia to Cape Horn", \
-"REGION_NGA_03" : "Antarctic and Drake Passage", \
-"REGION_NGA_04" : "South America East Coast: Cape Horn to Columbia", \
-"REGION_NGA_05" : "Bermuda Bahamas Caymans and Caribbean", \
 "REGION_NZ_01" : "NewZealand"
 }
 
@@ -120,7 +116,35 @@ def getRegionBsbDir(region):
     if _isBrazilRegion(region):
         return Env.brazilBsbDir
     
+def isRegion(region):
+    if _isNGARegion(region):
+        return True
+    if _isNOAARegion(region):
+        return True
+    if _isCanadaRegion(region):
+        return True
+    if _isNewZealandRegion(region):
+        return True
+    if _isBrazilRegion(region):
+        return True
+    return False
+
+def getRegionDescription(region):
+    if _isNGARegion(region):
+        datFilePath = Env.ngaRegionDir+region+".dat"
+        if os.path.isfile(datFilePath):
+            datFile = open(datFilePath, "r")
+            return datFile.readline().lstrip("#")
+    elif descriptions.has_key(region):
+        return descriptions[region]
+    return "Unknown"
+    
 if __name__== "__main__":
+#    print getRegionDescription("REGION_NGA_06")
+#    filter = getRegionFilterList("REGION_NGA_10")
+#    filter.sort()
+#    for ea in filter:
+#        print ea
     regions = descriptions.keys()
     regions.sort()
     for r in regions:

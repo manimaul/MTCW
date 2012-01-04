@@ -61,4 +61,4 @@ def getKapZoom(kapfile):
         return getZoom(scale, latitude)
 
 if __name__== "__main__":
-    print getKapZoom("/home/will/charts/NZ_BSB_ROOT/NZ14065.kap")
+    print getKapZoom("/home/will/zxyCharts/BSB_ROOT/NGA_BSB_ROOT/29323.kap")
