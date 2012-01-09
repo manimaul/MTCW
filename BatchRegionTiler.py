@@ -22,7 +22,7 @@ class createTiles():
             print "Creating tileset ###", count, "of", total, "###"
             header = BsbHeader(kapPath)
             if wgs84compat.__contains__(header.getprojection()):
-                self.doTile2(kapPath, log, regiondir)
+                self.doTile(kapPath, log, regiondir)
             else:
                 print "this set is not wgs84 projected... using alternative tiling method"
                 self.doTile2(kapPath, log, regiondir)

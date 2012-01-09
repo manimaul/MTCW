@@ -25,10 +25,12 @@ fPaths.sort()
 for fPath in fPaths:
     kapFile = fPath.split("/")[-1]
     if len(kapFile) == 6:
+        if not os.path.isdir(destDir+"10s/"):
+            os.makedirs(destDir+"10s/")
         link = destDir+"10s/"+kapFile
         if not os.path.isfile(link):
             cmd = command %(fPath, link)
-            print cmd
+            #print cmd
             subprocess.Popen(shlex.split(cmd))
     if len(kapFile) == 7:
         subdir = kapFile[0]+"s"
@@ -37,7 +39,7 @@ for fPath in fPaths:
         link = destDir+"100s/%s/"%(subdir)+kapFile 
         if not os.path.isfile(link):
             cmd = command %(fPath, link)
-            print cmd
+            #print cmd
             subprocess.Popen(shlex.split(cmd))
     if len(kapFile) == 9:
         subdir = kapFile[0]+"0000s/"+kapFile[1]+"000s/"
@@ -47,6 +49,6 @@ for fPath in fPaths:
         #print link
         if not os.path.isfile(link):
             cmd = command %(fPath, link)
-            print cmd
+            #print cmd
             subprocess.Popen(shlex.split(cmd))
         

@@ -129,7 +129,6 @@ class MergeSet:
         (z,y,x)=map(int,(z,y,x))
         if z < self.max_zoom:
             return
-
         dz,dx,dy=z+1,x*2,y*2
         dst_tiles=[(dx,dy),  (dx+1,dy),
                    (dx,dy+1),(dx+1,dy+1)]
@@ -147,7 +146,6 @@ class MergeSet:
             out_raster=Image.composite(dst_raster,out_raster,dst_raster)
             del dst_raster
             out_raster.save(dst_path)
-
             if options.debug:
                 pf('%i'%level,end='')
             else:

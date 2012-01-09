@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import NoaaXmlParser, Env
+import NoaaXmlParser, Env, RegionNGAParser
 import os
 
 #NGA region descriptions defined in REGION_NGA_##.dat
@@ -27,14 +27,17 @@ descriptions = {
 "REGION_36" : "Alaska: Norton Sound to Beaufort Sea", \
 "REGION_40" : "Hawaiian Islands and U.S. Territories", \
 "REGION_BC_01" : "Canada West Coast", \
-"REGION_BR_01" : "Brazil: Guyana to Uruguay", \
-"REGION_NZ_01" : "NewZealand"
+"REGION_BR" : "Brazil: Guyana to Uruguay", \
+"REGION_NZ" : "New Zealand and South Pacific: Samoa to Ross Sea"
 }
 
 def _isNGARegion(region):
-    if os.path.isfile(Env.ngaRegionDir+region+".dat"):
+    if RegionNGAParser.getDescriptions().has_key(region):
         return True
     return False
+#    if os.path.isfile(Env.ngaRegionDir+region+".dat"):
+#        return True
+#    return False
 
 def _isNOAARegion(region):
     if NoaaXmlParser.xmlUrls.has_key(region):
@@ -57,7 +60,8 @@ def _isNewZealandRegion(region):
     return False
 
 def _getNGAFilterList(region):
-    datFilePath = Env.ngaRegionDir+region+".dat"
+    datFilePath = Env.ngaRegionDir+RegionNGAParser.getFiles()[region]
+    #datFilePath = Env.ngaRegionDir+region+".dat"
     filterList = []
     if os.path.isfile(datFilePath):
         datFile = open(datFilePath, "r")
@@ -69,7 +73,11 @@ def _getNGAFilterList(region):
     return filterList
 
 def printRegionList():
-    regions = descriptions.keys()
+    regions = []
+    for ea in descriptions.keys():
+        regions.append(ea)
+    for ea in RegionNGAParser.getDescriptions().keys():
+        regions.append(ea)
     regions.sort()
     for region in regions:
         print region
@@ -119,33 +127,29 @@ def getRegionBsbDir(region):
 def isRegion(region):
     if _isNGARegion(region):
         return True
-    if _isNOAARegion(region):
+    if _isNOAARegion(region) and descriptions.has_key(region):
         return True
-    if _isCanadaRegion(region):
+    if _isCanadaRegion(region) and descriptions.has_key(region):
         return True
-    if _isNewZealandRegion(region):
+    if _isNewZealandRegion(region) and descriptions.has_key(region):
         return True
-    if _isBrazilRegion(region):
+    if _isBrazilRegion(region) and descriptions.has_key(region):
         return True
     return False
 
 def getRegionDescription(region):
     if _isNGARegion(region):
-        datFilePath = Env.ngaRegionDir+region+".dat"
-        if os.path.isfile(datFilePath):
-            datFile = open(datFilePath, "r")
-            return datFile.readline().lstrip("#")
+        return RegionNGAParser.getDescriptions()[region]
+#        datFilePath = Env.ngaRegionDir+region+".dat"
+#        if os.path.isfile(datFilePath):
+#            datFile = open(datFilePath, "r")
+#            return datFile.readline().lstrip("#").strip()
     elif descriptions.has_key(region):
         return descriptions[region]
     return "Unknown"
     
 if __name__== "__main__":
-#    print getRegionDescription("REGION_NGA_06")
-#    filter = getRegionFilterList("REGION_NGA_10")
-#    filter.sort()
-#    for ea in filter:
-#        print ea
-    regions = descriptions.keys()
-    regions.sort()
-    for r in regions:
-        print r
+    filter = getRegionFilterList("REGION_NGA_39")
+    for ea in filter:
+        print ea
+#    printRegionList()

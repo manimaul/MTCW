@@ -5,26 +5,25 @@
 import os.path, time, sys, codecs
 import BsbOutlines, Regions, Env
 
-# CREATE TABLE charts ( 
-    # region  TEXT,
-    # file    TEXT,
-    # name    TEXT,
-    # updated TEXT,
-    # scale   INT,
-    # outline TEXT,
-    # depths  TEXT 
-# );
+#        CREATE TABLE regions ( 
+#            name          TEXT,
+#            description   TEXT,
+#            image         TEXT,
+#            size          INT,
+#            installeddate INT,
+#            latestdate    INT );
 
-
-#str0 = "UPDATE regions SET installeddate='%s' WHERE name='%s';\n"
-str0custom = u"DELETE from regions WHERE name='%s';\n"
-str0custom2 = u"INSERT into [regions] ([name], [description], [installeddate] ) VALUES ('%s', '%s', '%s');\n"
+str0 = "UPDATE regions SET installeddate='%s' WHERE name='%s';\n"
+strcustom0 = u"DELETE from regions WHERE name='%s';\n"
+strcustom1 = u"INSERT into [regions] ([name], [description], [image], [size], [installeddate] ) VALUES ('%s', '%s', '%s', '%s', '%s');\n"
 str1 = u"DELETE from charts where region='%s';\n"
 str2 = u"INSERT INTO [charts] ([region], [file], [name], [updated], [scale], [outline], [depths]) VALUES ('%s', '%s', '%s', '%s', %s, '%s', '%s');\n"
 #dir = '/home/will/charts/gemfs_version2'
 #region = "REGION_40"
 #epoch = "1324500235"
-epoch = int(time.time())
+epoch = "1325898951"
+custom = False;
+#epoch = int(time.time())
 
 def generateUpdate():
     sqlf = open(Env.gemfDir+"/UPDATE.sql", "w")
@@ -49,18 +48,41 @@ def generateNOAA():
         generateRegion(region)
         
 def generateRegion(region):
+    #fisrt lets see if the gemf is there
+    gemfFile = Env.gemfDir+region+".gemf"
+    if not os.path.isfile(gemfFile):
+        print "gemf not ready"
+        sys.exit()
+    else:
+        bytes = os.path.getsize(gemfFile)
     print "generating data for " + region
     filter = Regions.getRegionFilterList(region)
     bo = BsbOutlines.BsbOutlines(Env.bsbDir, filter)
-    sqlf = codecs.open(Env.gemfDir+"/"+region+".data", "w", "utf-8")
-    #sqlf = open(Env.gemfDir+"/"+region+".data", "w")
-    sqlf.write(u"mx.mariner.data\n")
-    sqlf.write(str0custom %(region))
-    sqlf.write(str0custom2 %(region, Regions.getRegionDescription(region), epoch))
-    #sqlf.write( str0 %(epoch, region) )
-    sqlf.write( str1 %(region) )
+    sqlf = codecs.open(Env.gemfDir+"/"+region+".sql", "w", "utf-8")
+    #sqlf = open(Env.gemfDir+"/"+region+".bin", "wb")
+    
+    wrt = u"mx.mariner.data\n"
+    sqlf.write( codecs.encode(wrt) )
+    
+    if (custom):
+        wrt = strcustom0 %(region)
+        sqlf.write( codecs.encode(wrt) )
+        
+        #[name], [description], [image], [size], [installeddate]
+        wrt = strcustom1 %(region, Regions.getRegionDescription(region), region.lower().replace("_", ""), bytes, epoch)
+        sqlf.write( codecs.encode(wrt) )
+    else:
+        wrt = str0 %(epoch, region)
+        sqlf.write( codecs.encode(wrt) )
+    
+    wrt = str1 %(region) 
+    sqlf.write( codecs.encode(wrt) )
+    
     for kapfile in bo.getkeys():
-        sqlf.write( str2 %(region, kapfile, bo.getname(kapfile), bo.getupdated(kapfile), bo.getscale(kapfile), bo.getoutline(kapfile), bo.getdepthunits(kapfile)) )
+        wrt = str2 %(region, kapfile, bo.getname(kapfile), bo.getupdated(kapfile), bo.getscale(kapfile), bo.getoutline(kapfile), bo.getdepthunits(kapfile))
+        sqlf.write( codecs.encode(wrt) )
+    
+    sqlf.close()
             
 def isEven(i):
     return i%2 and True or False

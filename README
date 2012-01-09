@@ -21,7 +21,8 @@ tiles_opt.py
 reader_bsb_data.csv
 
 # KNP/ projection parameters
-+proj_knp,UNKNOWN,                       PROJ4:+proj=merc,PP:lat_ts,
++proj_knp,OTHER,                          PROJ4:+proj=merc,PP:lat_ts,
++proj_knp,UNKNOWN,                        PROJ4:+proj=merc,PP:lat_ts,
 
 ###################################################################################
 

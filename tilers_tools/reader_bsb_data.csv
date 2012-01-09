@@ -22,6 +22,7 @@ datum_guess, "Croatia",            "+ellps=bessel +towgs84=550.499,164.116,475.1
 #"+ellps=bessel +towgs84=682,-203,480",
 
 # KNP/ projection parameters
+proj_knp,OTHER,                          PROJ4:+proj=merc,PP:lat_ts,
 proj_knp,UNKNOWN,                        PROJ4:+proj=merc,PP:lat_ts,
 proj_knp,MERCATOR,                       PROJ4:+proj=merc,PP:lat_ts,
 proj_knp,TRANSVERSE MERCATOR,            PROJ4:+proj=tmerc,PP:lon_0,P1:lat_0,P2:k,P3:y_0,P4:x_0,
