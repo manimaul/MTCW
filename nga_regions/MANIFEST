@@ -5,14 +5,14 @@ REGION_NGA_04,South America West: Chile to Cape Horn,248mb,chileToCapeHorn.dat
 #REGION_NGA_05,,?,
 REGION_NGA_06,Antarctic and Drake Passage,169mb,antarcticAndDrakePassage.dat
 REGION_NGA_07,South America East: Brazil Border to Cape Horn,194mb,brazilToCapehorn.dat
-REGION_NGA_08,South America East:Guayana Border to Central Brazil,165mb,guayanaToBrazil.dat
-REGION_NGA_09,South America East: Southern Brazil to Central Brazil,187,sBrazilTocBrazil.dat
+REGION_NGA_08,South America East:Central Brazil to Uruguay Border,165mb,guayanaToBrazil.dat
+REGION_NGA_09,South America East: Guayana Border to Central Brazil,187,sBrazilTocBrazil.dat
 REGION_NGA_10,South America East: Columbia to Guayana,173mb,guayanaToColumbia.dat
 REGION_NGA_11,Central America East: Mexico to Columbia,211mb,mexicoToColumbiaEast.dat
 #REGION_NGA_02,,?,
 #REGION_NGA_13,UNUSED FOR SUPERSTITIOUS REASONS,:),
 REGION_NGA_14,Caribbean South: Cuba and Jamaica to Dominican Republic,246mb,cubaJamToDomre.dat
-REGION_NGA_15,Bermuda Bahamas and Caribbean East: Virgin Islands to Grenada,253.5mb,bermudaBahamas.dat
+REGION_NGA_15,Bermuda Bahamas and Caribbean: Virgin Islands to Grenada,253.5mb,bermudaBahamas.dat
 #REGION_NGA_16,,?,
 #REGION_NGA_17,,?,
 #REGION_NGA_18,,?,
@@ -34,7 +34,7 @@ REGION_NGA_33,Baltic Sea: Sweden and Finland to Poland,291mb,balticSwedenFinland
 #REGION_NGA_34,,?,
 REGION_NGA_35,Denmark West to French Border,224mb,denmarkFrance.dat
 #REGION_NGA_36,,?,
-REGION_NGA_37,France to Spain,211mb,franceSpain.dat
+REGION_NGA_37,Bay of Biscay: France to Spain,211mb,franceSpain.dat
 #REGION_NGA_38,,?,
 REGION_NGA_39,Portugal to Morocco and Azores,179mb,portugalMorocco.dat
 #REGION_NGA_40,,?,

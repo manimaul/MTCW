@@ -87,9 +87,9 @@
             <opencpn:viz_name>1</opencpn:viz_name>
         </extensions>
     </wpt>
-    <wpt lat="47.594586019" lon="-3.685465916">
+    <wpt lat="47.456223086" lon="-3.571897432">
         <time>2012-01-09T19:09:08Z</time>
-        <name>REGION_NGA_35</name>
+        <name>REGION_NGA_37</name>
         <sym>triangle</sym>
         <type>WPT</type>
         <extensions>

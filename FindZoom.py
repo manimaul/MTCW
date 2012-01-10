@@ -12,6 +12,11 @@ from BsbHeader import BsbHeader
 
 zoomOverrides = {"NZ14065.kap" : 6, "18431_1.KAP" : 15}
 
+#"43082.kap" : 12, "43083.kap" : 12, "43084.kap" : 12, "43100.kap" : 10, "43101.kap" : 12, "43102.kap" : 12, 
+#"43104.kap" : 12, "43105.kap" : 12, "43106.kap" : 12, "43122.kap" : 12, "43123.kap" : 12, "43124.kap" : 12, 
+#"43126.kap" : 12, "43141.kap" : 12, "43142.kap" : 12, "43143.kap" : 12, "43144.kap" : 11, "43145.kap" : 12, 
+#"43164.kap" : 12, "43167.kap" : 12, 
+
 def haversinedistance(origin, destination):
     lon1, lat1 = origin
     lon2, lat2 = destination

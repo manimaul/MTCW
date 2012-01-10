@@ -51,7 +51,7 @@ def generateRegion(region):
     #fisrt lets see if the gemf is there
     gemfFile = Env.gemfDir+region+".gemf"
     if not os.path.isfile(gemfFile):
-        print "gemf not ready"
+        print "gemf not ready:" + region
         sys.exit()
     else:
         bytes = os.path.getsize(gemfFile)
@@ -84,23 +84,7 @@ def generateRegion(region):
     
     sqlf.close()
             
-def isEven(i):
-    return i%2 and True or False
 
-def printByteItemArray():
-    out = ""
-    i=0;
-    lst = os.listdir(Env.gemfDir)
-    os.chdir(Env.gemfDir)
-    lst.sort()
-    for p in lst:
-        if p.endswith(".gemf"):
-            out += "<item>" + str(os.path.getsize(p)) + "</item>"
-            if isEven(i):
-                out+="\n"
-            i+=1
-    print out
-    
 if __name__== "__main__":
     if not sys.argv.__len__() == 2:
         print "You must supply a region:"
@@ -113,10 +97,7 @@ if __name__== "__main__":
             generateNOAA()
         elif arg == "ALL_NGA":
             print "not yet implemented"
-        elif arg == "PRINTARRAY":
-            printByteItemArray()
         elif Regions.isRegion(arg):
             generateRegion(arg)
         else:
-            print "invalid argument"
-            print arg
+            print "invalid argument", arg
