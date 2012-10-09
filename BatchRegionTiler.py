@@ -38,6 +38,8 @@ class createTiles():
         gmtPath = kapPath[0:-4]+".gmt"
         print gmtPath, "\n"
         if os.path.isfile(gmtPath):
+            #--overview-resampling: (choose from 'bilinear', 'nearest', 'near', 'antialias', 'bicubic'
+            #--base-resampling: (choose from 'bilinear', 'nearest', 'cubic', 'near', 'lanczos', 'cubicspline'
             command = "python %sgdal_tiler.py --overview-resampling=bilinear --base-resampling=bilinear -t " %(Env.tilersToolsDir) + regiondir + \
                       " --cut --cutline " + gmtPath + " -z " + str(getKapZoom(kapPath)) + " " + kapPath
             destdir = regiondir + "/" + os.path.basename(kapPath)[0:-4]+".zxy"

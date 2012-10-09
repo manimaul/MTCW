@@ -1,5 +1,6 @@
 # datum_map
 datum,WGS84,                "+datum=WGS84",
+datum,NAD27,                "+datum=NAD27",
 datum,NAD83,                "+datum=NAD83",
 datum,POTSDAM,              "+datum=potsdam",
 #http://earth-info.nga.mil/GandG/coordsys/onlinedatum/CountryEuropeTable.html

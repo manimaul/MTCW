@@ -10,6 +10,7 @@ home = os.getenv("HOME")
 url = "http://www.charts.noaa.gov/NGAViewer/"
 cacheRoot = home+"/NGA/htmlCache/"
 zoom = "6"
+rootHtmlFile = cacheRoot+"/ngaRasterRoot.html"
 
 def haveChartImage(chart):
     if os.path.isfile(cacheRoot+chart.rstrip("/")+".png"):
@@ -97,15 +98,15 @@ def makeChart(chart = "11"):
     print "compiling final chart #"+chart+"..."
     os.system(cmd + "+append ../"+chart+".png")
     print "done :)"
-
-if __name__=="__main__":
-    htmlFile = cacheRoot+"/ngaRasterRoot.html"
     
-    if not os.path.isfile(htmlFile):
+def getFolderIndexHtml():
+    rootHtmlFile = cacheRoot+"/ngaRasterRoot.html"
+    
+    if not os.path.isfile(rootHtmlFile):
         print "retrieving html from charts.noaa.gov/NGAView/: "
-        urllib.urlretrieve(url, htmlFile)
+        urllib.urlretrieve(url, rootHtmlFile)
         
-    links = getUrlsInHtml(htmlFile)
+    links = getUrlsInHtml(rootHtmlFile)
     
     for link in links:
         #print "grabbing pdfs"
@@ -119,4 +120,32 @@ if __name__=="__main__":
             print "downloading " + chart + "..."
             getZoomifyTiles(chart)
             makeChart(chart)
+            
+def getPdfs():
+    getFolderIndexHtml()
+    
+    
+
+if __name__=="__main__":
+    pass
+#    htmlFile = cacheRoot+"/ngaRasterRoot.html"
+#    
+#    if not os.path.isfile(htmlFile):
+#        print "retrieving html from charts.noaa.gov/NGAView/: "
+#        urllib.urlretrieve(url, htmlFile)
+#        
+#    links = getUrlsInHtml(htmlFile)
+#    
+#    for link in links:
+#        #print "grabbing pdfs"
+#        if isPdf(link) and not havePdf(link):
+#            print "downloading " + url+link + "..."
+#            urllib.urlretrieve(url+link, cacheRoot+link)
+#        #print link
+#        #print "grabbing zoomify tiles"
+#        if isChartDir(link) and not haveChartImage(link):
+#            chart = link.rstrip("/")
+#            print "downloading " + chart + "..."
+#            getZoomifyTiles(chart)
+#            makeChart(chart)
     

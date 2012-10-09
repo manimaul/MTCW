@@ -21,7 +21,7 @@ str2 = u"INSERT INTO [charts] ([region], [file], [name], [updated], [scale], [ou
 #dir = '/home/will/charts/gemfs_version2'
 #region = "REGION_40"
 #epoch = "1324500235"
-epoch = "1325898951"
+epoch = "1331534724"
 custom = False;
 #epoch = int(time.time())
 
@@ -49,12 +49,7 @@ def generateNOAA():
         
 def generateRegion(region):
     #fisrt lets see if the gemf is there
-    gemfFile = Env.gemfDir+region+".gemf"
-    if not os.path.isfile(gemfFile):
-        print "gemf not ready:" + region
-        sys.exit()
-    else:
-        bytes = os.path.getsize(gemfFile)
+    
     print "generating data for " + region
     filter = Regions.getRegionFilterList(region)
     bo = BsbOutlines.BsbOutlines(Env.bsbDir, filter)
@@ -62,25 +57,31 @@ def generateRegion(region):
     #sqlf = open(Env.gemfDir+"/"+region+".bin", "wb")
     
     wrt = u"mx.mariner.data\n"
-    sqlf.write( codecs.encode(wrt) )
+    sqlf.write( wrt )
     
     if (custom):
+        gemfFile = Env.gemfDir+region+".gemf"
+        if not os.path.isfile(gemfFile):
+            print "gemf not ready:" + region
+            sys.exit()
+        else:
+            bytes = os.path.getsize(gemfFile)
         wrt = strcustom0 %(region)
-        sqlf.write( codecs.encode(wrt) )
+        sqlf.write( wrt )
         
         #[name], [description], [image], [size], [installeddate]
         wrt = strcustom1 %(region, Regions.getRegionDescription(region), region.lower().replace("_", ""), bytes, epoch)
-        sqlf.write( codecs.encode(wrt) )
+        sqlf.write( wrt )
     else:
         wrt = str0 %(epoch, region)
-        sqlf.write( codecs.encode(wrt) )
+        sqlf.write( wrt )
     
     wrt = str1 %(region) 
-    sqlf.write( codecs.encode(wrt) )
+    sqlf.write( wrt )
     
     for kapfile in bo.getkeys():
         wrt = str2 %(region, kapfile, bo.getname(kapfile), bo.getupdated(kapfile), bo.getscale(kapfile), bo.getoutline(kapfile), bo.getdepthunits(kapfile))
-        sqlf.write( codecs.encode(wrt) )
+        sqlf.write( wrt )
     
     sqlf.close()
             

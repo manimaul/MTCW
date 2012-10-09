@@ -29,6 +29,8 @@ def doItAll(region):
             subprocess.Popen(cmd).wait()
             
         else:
+            print len(Regions.getRegionFilterList(region))
+            print len(open(Env.mergedTileDir+region+"/mergeorder.txt").readlines())
             print "an error occurred"
 
 if __name__== "__main__":

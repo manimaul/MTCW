@@ -6,7 +6,7 @@ import os
 from xml.dom import minidom
 import Env
 
-xmlUrls = { #"NOAA_ALL" : "http://www.charts.noaa.gov/RNCs/RNCProdCat_19115.xml", \
+xmlUrls = { "NOAA_ALL" : "http://www.charts.noaa.gov/RNCs/RNCProdCat_19115.xml", \
 #           "DISTRICT_01" : "http://www.charts.noaa.gov/RNCs/01CGD_RNCProdCat_19115.xml", \
 #           "DISTRICT_05" : "http://www.charts.noaa.gov/RNCs/05CGD_RNCProdCat_19115.xml", \
 #           "DISTRICT_07" : "http://www.charts.noaa.gov/RNCs/07CGD_RNCProdCat_19115.xml", \
@@ -132,6 +132,6 @@ class NoaaXmlParser():
         return kaplst
 
 if __name__ == "__main__":
-    nxl = NoaaXmlParser("REGION_03")
+    nxl = NoaaXmlParser("REGION_04")
     print nxl.getKapFiles()
 

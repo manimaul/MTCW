@@ -83,16 +83,32 @@ def printRegionList():
         print region
 
 def getRegionFilterList(region):
+    list = []
     if _isNGARegion(region):
         return _getNGAFilterList(region)
     if _isNOAARegion(region):
         return NoaaXmlParser.NoaaXmlParser(region).getKapFiles()
     if _isCanadaRegion(region):
-        return os.listdir(Env.canadaBsbDir)
+        for ea in os.listdir(Env.canadaBsbDir):
+            if ea.endswith(".KAP"):
+                list.append(ea)
+            if ea.endswith(".kap"):
+                list.append(ea)
+        return list
     if _isNewZealandRegion(region):
-        return os.listdir(Env.newZelandBsbDir)
+        for ea in os.listdir(Env.newZelandBsbDir):
+            if ea.endswith(".KAP"):
+                list.append(ea)
+            if ea.endswith(".kap"):
+                list.append(ea)
+        return list
     if _isBrazilRegion(region):
-        return os.listdir(Env.brazilBsbDir)
+        for ea in os.listdir(Env.brazilBsbDir):
+            if ea.endswith(".KAP"):
+                list.append(ea)
+            if ea.endswith(".kap"):
+                list.append(ea)
+        return list
     
 def _getRegionTileDir(region):
     if _isNGARegion(region):
@@ -152,4 +168,4 @@ if __name__== "__main__":
 #    filter = getRegionFilterList("REGION_NGA_45")
 #    for ea in filter:
 #        print ea
-    printRegionList()
+    print len(getRegionFilterList("REGION_04"))
