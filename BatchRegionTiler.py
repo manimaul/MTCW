@@ -9,7 +9,8 @@ from FilePathSearch import FilePathSearch
 from FindZoom import getKapZoom
       
 class createTiles():
-    def __init__(self, directory, regiondir, filter = None):
+    def __init__(self, directory, regiondir, region, filter = None):
+        self.region = region
         if not os.path.isdir(regiondir):
             os.mkdir(regiondir)
         fps = FilePathSearch(directory, 'KAP', filter)
@@ -30,7 +31,11 @@ class createTiles():
         log.close()
         
     def doTile(self, kapPath, log, regiondir):
-        command = "python %smap2gdal.py -q --cut-file %s" %(Env.tilersToolsDir, kapPath)
+        header_override = Env.mtcwDir+"header_overrides/NOAA/"+os.path.basename(kapPath)[0:-4]+".txt"
+        if Regions._isNOAARegion(self.region) and os.path.isfile(header_override):
+            command = "python %smap2gdal.py -q --cut-file --header-file %s %s" %(Env.tilersToolsDir, header_override, kapPath)
+        else:   
+            command = "python %smap2gdal.py -q --cut-file %s" %(Env.tilersToolsDir, kapPath)
         #print command
         thisone = subprocess.Popen(shlex.split(command), stdout=log)
         thisone.wait()
@@ -55,7 +60,11 @@ class createTiles():
             sys.exit()
             
     def doTile2(self, kapPath, log, regiondir):
-        command = "python %smap2gdal.py -q %s" %(Env.tilersToolsDir, kapPath)
+        header_override = Env.mtcwDir+"header_overrides/NOAA/"+os.path.basename(kapPath)[0:-4]+".txt"
+        if Regions._isNOAARegion(self.region) and os.path.isfile(header_override):
+            command = "python %smap2gdal.py -q --header-file %s %s" %(Env.tilersToolsDir, header_override, kapPath)
+        else:
+            command = "python %smap2gdal.py -q %s" %(Env.tilersToolsDir, kapPath)
         print command
         thisone = subprocess.Popen(shlex.split(command), stdout=log)
         thisone.wait()
@@ -127,7 +136,7 @@ def renderRegion(region):
     tileDir = Regions.getRegionUnMergedTileDir(region)
     bsbDir = Regions.getRegionBsbDir(region)
     if filter != None:
-        createTiles(bsbDir, tileDir, filter)
+        createTiles(bsbDir, tileDir, region, filter)
     else:
         print region + " does not exist"
         

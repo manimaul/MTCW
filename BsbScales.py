@@ -86,30 +86,9 @@ class BsbScales():
             
                
 if __name__== "__main__":
-#    import sys, os.path
-#    if not sys.argv.__len__() == 2:
-#        print "You must supply a ROOT BSB directory"
-#        sys.exit()
-#    
-#    dir = sys.argv[1]
-#    if not os.path.isdir(dir):
-#        print dir, "is not a directory"
-#        sys.exit()
-
-    import os.path, subprocess, shutil
-    dir = "/home/will/charts/BSB_ROOT"
-    bsbScales = BsbScales(dir)
-    tiledir = '/home/will/charts/BSB_ALL/'
-    #lst = bsbScales.getChartsAtScale(10000)
-    lst = os.listdir(tiledir)
-    i = 1;
-    for ch in lst:
-        target = tiledir+os.path.basename(ch).rstrip("KAP")#+"zxy"
-        if os.path.isdir(target):
-#            shutil.rmtree(target)
-            i += 1;
-            if (i < 5):
-                command = ["firefox", target + "/viewer-google.html"]
-                subprocess.Popen(command)
-        else:
-            print "missing " + target
+    import Regions
+    filter = Regions.getRegionFilterList("REGION_15")
+    dir = "/home/will/zxyCharts/BSB_ROOT/NOAA_BSB_ROOT/BSB_ROOT"
+    bs = BsbScales(dir, filter)
+    for ea in bs.getKapsSortedByScale(".KAP"):
+        print ea

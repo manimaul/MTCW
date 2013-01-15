@@ -3,6 +3,9 @@
 
 from FilePathSearch import FilePathSearch
 from BsbHeader import BsbHeader
+from Env import mtcwDir
+from FindZoom import getZoom
+import os.path
 
 class BsbOutlines():
     def __init__(self, directory, filter=None):
@@ -12,9 +15,21 @@ class BsbOutlines():
             self._read(map_file)
     
     def _read(self, map_file):
-        header = BsbHeader(map_file)
+        #see if we have a header override file
+        fps = FilePathSearch(mtcwDir+"header_overrides", "txt")
+        for override in fps.getfilePaths():
+            if os.path.basename(override).split(".")[0] == os.path.basename(map_file).split(".")[0]:
+                #print "using override", map_file
+                header = BsbHeader(override)
+                usedOverride = True
+                break
+            usedOverride = False
+        #use detault header
+        if not usedOverride:
+            #print "not using override", map_file
+            header = BsbHeader(map_file)
         key = header.getbasefile()
-        data = [header.getname(), header.getupdated(), header.getscale(), header.getOutline(), header.getDepthUnits(), "NULL"]
+        data = [header.getname(), header.getupdated(), header.getscale(), header.getOutline(), header.getDepthUnits(), getZoom(header.getscale(), header.getCenter()[1])]
         self.data[key] = data
         
     def printdata(self):
@@ -42,15 +57,17 @@ class BsbOutlines():
     def getdepthunits(self, key):
         return self.data[key][4]
     
-    def getzooms(self, key):
+    def getzoom(self, key):
         return self.data[key][5]
     
 if __name__== "__main__":
     
-    bo = BsbOutlines("/home/will/zxyCharts/BSB_ROOT/BR_BSB_ROOT", "210301.KAP")
-    print type(bo.getname("210301.KAP"))
-    print bo.getname("210301.KAP")
-    print bo.getupdated("210301.KAP")
-    print bo.getscale("210301.KAP")
-    print bo.getoutline("210301.KAP")
-    print bo.getdepthunits("210301.KAP")
+    bo = BsbOutlines("/home/will/zxyCharts.old/BSB_ROOT/BR_BSB_ROOT/200")
+    for each in bo.getkeys():
+        print each
+        print bo.getoutline(each)
+        print bo.getname(each)
+        print bo.getupdated(each)
+        print bo.getscale(each)
+        print bo.getdepthunits(each)
+        print "\n"

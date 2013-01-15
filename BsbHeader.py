@@ -100,12 +100,4 @@ class BsbHeader():
         return (centerlon, centerlat)
                
 if __name__== "__main__":
-    
-    header = BsbHeader("/home/will/zxyCharts/BSB_ROOT/BR_BSB_ROOT/210301.KAP")
-    print type(header.getname())
-    print header.getname()
-    print header.getupdated()
-    print header.getscale()
-    print header.getOutline()
-    print header.getDepthUnits()
-    print header.getCenter()
+    pass

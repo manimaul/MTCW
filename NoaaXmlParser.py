@@ -98,7 +98,9 @@ class NoaaXmlParser():
                             '18652_20.KAP', '12285_19.KAP', '12285_18.KAP', '12205_13.KAP', '11451_16.KAP', \
                             '11451_17.KAP', '11326_7.KAP']
         #need to find a way to fix these
-        self.problemCharts = ['12206_6.KAP', '5161_1.KAP']
+        self.problemCharts = ['12206_6.KAP', '5161_1.KAP', '18445_7.KAP', '1116A_1.KAP', '1117A_1.KAP', '18445_8.KAP']
+        #18445_8 is identical to another chart that has feet depth units that we modified the header
+        #1116A_1.KAP and 1117A_1.KAP have identical better charts and has grid pattern wich does not display well on mobile
         
 #        self.wrongZoomCharts = ["11467_1.zxy", "12285_15.zxy", "11541_5.zxy", "11534_5.zxy", "11534_1.zxy", "12324_5.zxy", \
 #                                "11541_3.zxy", "11507_1.zxy", "12316_4.zxy", "18445_14.zxy", "11467_6.zxy", "12324_1.zxy", \

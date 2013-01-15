@@ -167,7 +167,11 @@ class SrcMap(object):
 
         self.load_data() # load datum definitions, ellipses, projections
         self.file=src_file.decode(locale.getpreferredencoding(),'ignore')
-        self.header=self.get_header()       # Read map header
+        if options.header_file is not None:
+            print "using header file override"
+            self.header=self.get_header(options.header_file)
+        else:
+            self.header=self.get_header(self.file)       # Read map header
 
     def load_csv(self,csv_file,csv_map):
         'load datum definitions, ellipses, projections from a file'

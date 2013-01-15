@@ -10,7 +10,8 @@ from shapely.geometry import Point
 from pyproj import Proj
 from BsbHeader import BsbHeader
 
-zoomOverrides = {"NZ14065.kap" : 6, "18431_1.KAP" : 15}
+zoomOverrides = {}
+#zoomOverrides = {"NZ14065.kap" : 6, "18431_1.KAP" : 15}
 
 #"43082.kap" : 12, "43083.kap" : 12, "43084.kap" : 12, "43100.kap" : 10, "43101.kap" : 12, "43102.kap" : 12, 
 #"43104.kap" : 12, "43105.kap" : 12, "43106.kap" : 12, "43122.kap" : 12, "43123.kap" : 12, "43124.kap" : 12, 
@@ -47,11 +48,14 @@ def latitudedistortion(latitude):
     return cdist/hdist
 
 def getZoom(scale, latitude):
-    tweakPercent = .87
-    scale = scale * latitudedistortion(latitude) * tweakPercent
+    #tweakPercent = .87
+    tweakPercent = .70
+    truescale = scale * latitudedistortion(latitude) * tweakPercent
+    #print truescale
+    #print latitudedistortion(latitude)
     t = 30;
-    while scale > 1:
-        scale = scale / 2;
+    while truescale > 1:
+        truescale = truescale / 2;
         t -= 1;
     return t
 
@@ -66,4 +70,8 @@ def getKapZoom(kapfile):
         return getZoom(scale, latitude)
 
 if __name__== "__main__":
-    print getKapZoom("/home/will/zxyCharts/BSB_ROOT/BC_BSB_ROOT/355501.KAP")
+    #print getKapZoom("/home/will/zxyCharts/BSB_ROOT/NOAA_BSB_ROOT/BSB_ROOT/18431/18431_1.KAP")
+    
+    scale = 3500000
+    latitude = 48
+    print getZoom(scale, latitude)

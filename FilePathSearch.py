@@ -36,7 +36,8 @@ class FilePathSearch():
         return self.filePaths
 
 if __name__== "__main__":
-    dir = "/home/will/charts/BSB_ROOT"
-    filePathSearch = FilePathSearch(dir, 'KAP')
+    dir = "/home/will/zxyCharts/BSB_ROOT/NOAA_BSB_ROOT/BSB_ROOT/12266/"
+    filePathSearch = FilePathSearch(dir)
     for path in filePathSearch.getfilePaths():
-        print path
+        print os.path.dirname(path)
+        print os.path.basename(path).split(".")[0]

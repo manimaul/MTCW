@@ -36,14 +36,10 @@ from tiler_functions import *
 
 from reader_bsb import BsbKapMap
 from reader_geo import GeoNosMap
-from reader_ozi import OziMap
-from reader_kml import KmlMap
 
 class_map=(
     BsbKapMap,
     GeoNosMap,
-    OziMap,
-    KmlMap
     )
 
 def proc_src(src):
@@ -71,6 +67,8 @@ if __name__=='__main__':
         help="override a datum part only (PROJ.4 definition)")
     parser.add_option("--proj", default=None,
         help="override a projection part only (PROJ.4 definition)")
+    parser.add_option("-o", "--header-file", default=None,
+        help="override default BSB header")
     parser.add_option("--force-dtm", action="store_true", 
         help='force using BSB datum shift to WGS84 instead of native BSB datum')
     parser.add_option("--dtm",dest="dtm_shift",default=None,metavar="SHIFT_LONG,SHIFT_LAT",

@@ -6,12 +6,12 @@ home = os.getenv("HOME")
 
 ######EDIT THIS ONLY###############
 #where this (MTCW) lives 
-mtcwDir = home + "/workspace/MTCW/"
+mtcwDir = home + "/Documents/workspace-python/MTCW/"
 
 ######YOU DON'T NEED TO EDIT ANYTHING ELSE
 
 #Output directory
-rootDir = home + "/zxyCharts/"
+rootDir = "/media/AE9A81169A80DC69/Users/will/charts/"
 
 #bsb directory
 bsbDir = rootDir + "BSB_ROOT/"

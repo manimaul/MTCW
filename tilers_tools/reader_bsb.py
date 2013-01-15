@@ -54,10 +54,10 @@ class BsbKapMap(SrcMap):
             }
         self.load_csv(self.data_file,csv_map)
             
-    def get_header(self): 
+    def get_header(self, headerFile): 
         'read map header'
         header=[]
-        with open(self.file,'rU') as f:
+        with open(headerFile,'rU') as f:
             for l in f:
                 if '\x1A' in l:
                     break
@@ -191,6 +191,21 @@ class BsbLayer(SrcLayer):
 # BsbLayer
 
 if __name__=='__main__':
-    print('\nPlease use convert2gdal.py\n')
-    sys.exit(1)
+    class options:
+        def __init__(self):
+            self.srs = None
+            self.proj = None
+            self.datum = None
+            self.force_dtm = None
+            self.dtm_shift = None
+            self.after_name = None
+            self.after_map = None
+            self.dst_dir = None
+            self.long_name = None
+            self.get_cutline = None
+            self.cut_file = None
+            self.header_file = None #"/home/will/zxyCharts/BSB_ROOT/NOAA_BSB_ROOT/BSB_ROOT/12266/12266_1.txt"
+            
+    for overlay in BsbKapMap("/home/will/zxyCharts/BSB_ROOT/NOAA_BSB_ROOT/BSB_ROOT/12266/12266_1.KAP", options()).get_layers():
+        overlay.convert()
 

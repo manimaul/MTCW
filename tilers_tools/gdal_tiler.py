@@ -38,17 +38,12 @@ import operator
 import struct
 import json
 
-try:
-    from osgeo import gdal
-    from osgeo import osr
-    from osgeo import ogr
-    from osgeo.gdalconst import *
+from osgeo import gdal
+from osgeo import osr
+from osgeo import ogr
+from osgeo.gdalconst import *
 #    gdal.TermProgress = gdal.TermProgress_nocb
-except ImportError:
-    import gdal
-    import osr
-    import ogr
-    from gdalconst import *
+
 
 from tiler_functions import *
 
