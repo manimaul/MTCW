@@ -29,7 +29,7 @@ str2 = u"INSERT INTO [charts] ([region], [file], [name], [updated], [scale], [ou
 #region = "REGION_40"
 #epoch = "1324500235"
 #epoch = "1331534724"
-epoch = "1354751224"
+epoch = "1358984906"
 custom = False;
 #epoch = int(time.time())
 

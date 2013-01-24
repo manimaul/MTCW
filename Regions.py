@@ -165,7 +165,4 @@ def getRegionDescription(region):
     return "Unknown"
     
 if __name__== "__main__":
-#    filter = getRegionFilterList("REGION_NGA_45")
-#    for ea in filter:
-#        print ea
-    print len(getRegionFilterList("REGION_04"))
+    printRegionList()

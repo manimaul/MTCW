@@ -2,16 +2,15 @@
 # -*- coding: utf-8 -*-
 
 import os
-home = os.getenv("HOME")
 
 ######EDIT THIS ONLY###############
 #where this (MTCW) lives 
-mtcwDir = home + "/Documents/workspace-python/MTCW/"
+mtcwDir = os.getenv("HOME") + "/Documents/workspace-python/MTCW/"
+
+#InputOutput directory
+rootDir = "/mnt/auxdrive/zxyCharts/"
 
 ######YOU DON'T NEED TO EDIT ANYTHING ELSE
-
-#Output directory
-rootDir = "/media/AE9A81169A80DC69/Users/will/charts/"
 
 #bsb directory
 bsbDir = rootDir + "BSB_ROOT/"

@@ -4,6 +4,7 @@
 import os, subprocess, shutil, sys, shlex
 import Env, Regions
 import NoaaXmlParser
+import CreateHeaderOverride
 from BsbHeader import BsbHeader
 from FilePathSearch import FilePathSearch
 from FindZoom import getKapZoom
@@ -31,9 +32,10 @@ class createTiles():
         log.close()
         
     def doTile(self, kapPath, log, regiondir):
-        header_override = Env.mtcwDir+"header_overrides/NOAA/"+os.path.basename(kapPath)[0:-4]+".txt"
+        header_override = Env.mtcwDir+"header_overrides/NOAA/"+os.path.basename(kapPath)[0:-4]
         if Regions._isNOAARegion(self.region) and os.path.isfile(header_override):
-            command = "python %smap2gdal.py -q --cut-file --header-file %s %s" %(Env.tilersToolsDir, header_override, kapPath)
+            override = CreateHeaderOverride.makeHeader(kapPath)
+            command = "python %smap2gdal.py -q --cut-file --header-file %s %s" %(Env.tilersToolsDir, override, kapPath)
         else:   
             command = "python %smap2gdal.py -q --cut-file %s" %(Env.tilersToolsDir, kapPath)
         #print command
@@ -60,9 +62,10 @@ class createTiles():
             sys.exit()
             
     def doTile2(self, kapPath, log, regiondir):
-        header_override = Env.mtcwDir+"header_overrides/NOAA/"+os.path.basename(kapPath)[0:-4]+".txt"
+        header_override = Env.mtcwDir+"header_overrides/NOAA/"+os.path.basename(kapPath)[0:-4]
         if Regions._isNOAARegion(self.region) and os.path.isfile(header_override):
-            command = "python %smap2gdal.py -q --header-file %s %s" %(Env.tilersToolsDir, header_override, kapPath)
+            override = CreateHeaderOverride.makeHeader(kapPath)
+            command = "python %smap2gdal.py -q --header-file %s %s" %(Env.tilersToolsDir, override, kapPath)
         else:
             command = "python %smap2gdal.py -q %s" %(Env.tilersToolsDir, kapPath)
         print command
