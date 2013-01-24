@@ -1,8 +1,0 @@
-Guidelines
-
-- Regions should be navigationally useful areas including all large and small scale charts for particular area
-- Resulting gemf file should be idealy around 150MB with a maximum size of 250MB
-
-- First line after # is the region description
-- each following line should have the name of the <name>.kap file
-- each line should not have spaces unless commented out with # character

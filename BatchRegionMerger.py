@@ -6,9 +6,9 @@ import Regions, Env
 from BsbScales import BsbScales
 
 class mergeTiles():
-    def __init__(self, regiondir, kapDir, tileDir, filter=None):
+    def __init__(self, regiondir, kapDir, tileDir, pFilter=None):
         ##get merge order
-        bsbScales = BsbScales(kapDir, filter)
+        bsbScales = BsbScales(kapDir, pFilter)
         sortList = bsbScales.getKapsSortedByScale(".zxy")
         sortList.reverse() #only reverse if you are rendering 2 zoom levels
         moPath = regiondir + "/mergeorder.txt"
@@ -17,16 +17,16 @@ class mergeTiles():
         if os.path.isfile(regiondir + "/mergeorder.txt"):
             os.remove(moPath)
         moFile = open(moPath, "w")
-        exit = False
+        shouldExit = False
         for line in sortList:
             if os.path.isdir(tileDir + "/" + line):
                 moFile.write(tileDir + "/" + line+"\n")
             else:
                 print "missing tileset: " + line
-                exit = True
+                shouldExit = True
         moFile.close()
         
-        if exit:
+        if shouldExit:
             sys.exit()
             
         logfile = regiondir + "/mergelog.txt"

@@ -8,10 +8,13 @@
   Note: you can have any subdirectory structure you want as long as the kap/KAP
         files are in the corresponding root directory somewhere.
     Brazilian HO charts go here: BR_BSB_ROOT
-    Canadian charts go here: BC_BSB_ROOT
     new zealand charts go here: NZ_BSB_ROOT
-    opencpn.inf NGA charts go here: NGA_BSB_ROOT
     noaa charts go here: NOAA_BSB_ROOT
+
+- Run python BatchWrapper.py <REGION>
+	this will wrap all of the commands below up into one single task
+
+------------OR:
 
 - Run python BatchRegionTiler.py <REGION>
    Note: Run python Regions.py to see available REGIONS
@@ -24,5 +27,3 @@
 
 - Run python AutoGemf.py <REGION>
     Note: check gemflog.txt to see details
-
-- Run python GenerateMxRegionData.py <REGION>

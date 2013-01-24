@@ -1,20 +1,24 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os, subprocess, shutil, sys, shlex
-import Env, Regions
-import NoaaXmlParser
-import CreateHeaderOverride
 from BsbHeader import BsbHeader
 from FilePathSearch import FilePathSearch
 from FindZoom import getKapZoom
+import CreateHeaderOverride
+import Env
+import Regions
+import os
+import subprocess
+import shutil
+import sys
+import shlex
       
 class createTiles():
-    def __init__(self, directory, regiondir, region, filter = None):
+    def __init__(self, directory, regiondir, region, pFilter = None):
         self.region = region
         if not os.path.isdir(regiondir):
             os.mkdir(regiondir)
-        fps = FilePathSearch(directory, 'KAP', filter)
+        fps = FilePathSearch(directory, 'KAP', pFilter)
         logfile = directory + "/tilelog.txt"
         log = open(logfile, "wb")
         count = 1
@@ -92,33 +96,33 @@ class createTiles():
             sys.exit()
            
 class purgeZxy():
-    def __init__(self, dir):
-        fps = FilePathSearch(dir, 'zxy')
+    def __init__(self, pDir):
+        fps = FilePathSearch(pDir, 'zxy')
         for each in fps.getfilePaths():
             shutil.rmtree(each)
     
-def purgeVrt(dir):
-    fps = FilePathSearch(dir, 'vrt')
+def purgeVrt(pDir):
+    fps = FilePathSearch(pDir, 'vrt')
     count = 0
     for map_file in fps.getfilePaths():
         os.remove(map_file)
         count += 1
     print str(count) + " vrt files purged!"
     
-def purgeGmt(dir):
-    fps = FilePathSearch(dir, 'gmt')
+def purgeGmt(pDir):
+    fps = FilePathSearch(pDir, 'gmt')
     count = 0
     for map_file in fps.getfilePaths():
         os.remove(map_file)
         count += 1
     print str(count) + " gmt files purged!"
     
-def countVrts(dir):
-    fps = FilePathSearch(dir, 'vrt')
+def countVrts(pDir):
+    fps = FilePathSearch(pDir, 'vrt')
     print str(fps.getfilePaths().__len__()) + " vrt files"
     
-def vrtCheck(kapList):
-    fps = FilePathSearch(dir, 'vrt')
+def vrtCheck(kapList, pDir):
+    fps = FilePathSearch(pDir, 'vrt')
     vrtList = []
     for vrt in fps.getfilePaths():
         vrt = vrt.split("/")[-1].rstrip(".vrt")
@@ -134,12 +138,12 @@ def vrtCheck(kapList):
     return missing
     
 def renderRegion(region):
-    filter = Regions.getRegionFilterList(region)
-    #print filter
+    mFilter = Regions.getRegionFilterList(region)
+    #print mFilter
     tileDir = Regions.getRegionUnMergedTileDir(region)
     bsbDir = Regions.getRegionBsbDir(region)
-    if filter != None:
-        createTiles(bsbDir, tileDir, region, filter)
+    if mFilter != None:
+        createTiles(bsbDir, tileDir, region, mFilter)
     else:
         print region + " does not exist"
         
