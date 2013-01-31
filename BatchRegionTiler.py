@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from BsbHeader import BsbHeader
 from FilePathSearch import FilePathSearch
 from FindZoom import getKapZoom
 import CreateHeaderOverride
@@ -23,47 +22,41 @@ class createTiles():
         log = open(logfile, "wb")
         count = 1
         total = fps.filePaths.__len__()
-        wgs84compat = ["WGS84", "NAD83"]
         for kapPath in fps.getfilePaths():
             print "Creating tileset ###", count, "of", total, "###"
-            header = BsbHeader(kapPath)
-            if wgs84compat.__contains__(header.getprojection()):
-                self.doTile(kapPath, log, regiondir)
-            else:
-                print "this set is not wgs84 projected... using alternative tiling method"
-                self.doTile2(kapPath, log, regiondir)
+            self.doTile2(kapPath, log, regiondir)
             count += 1
         log.close()
         
-    def doTile(self, kapPath, log, regiondir):
-        header_override = Env.mtcwDir+"header_overrides/NOAA/"+os.path.basename(kapPath)[0:-4]
-        if Regions._isNOAARegion(self.region) and os.path.isfile(header_override):
-            override = CreateHeaderOverride.makeHeader(kapPath)
-            command = "python %smap2gdal.py -q --cut-file --header-file %s %s" %(Env.tilersToolsDir, override, kapPath)
-        else:   
-            command = "python %smap2gdal.py -q --cut-file %s" %(Env.tilersToolsDir, kapPath)
-        #print command
-        thisone = subprocess.Popen(shlex.split(command), stdout=log)
-        thisone.wait()
-        
-        gmtPath = kapPath[0:-4]+".gmt"
-        print gmtPath, "\n"
-        if os.path.isfile(gmtPath):
-            #--overview-resampling: (choose from 'bilinear', 'nearest', 'near', 'antialias', 'bicubic'
-            #--base-resampling: (choose from 'bilinear', 'nearest', 'cubic', 'near', 'lanczos', 'cubicspline'
-            command = "python %sgdal_tiler.py --overview-resampling=bilinear --base-resampling=bilinear -t " %(Env.tilersToolsDir) + regiondir + \
-                      " --cut --cutline " + gmtPath + " -z " + str(getKapZoom(kapPath)) + " " + kapPath
-            destdir = regiondir + "/" + os.path.basename(kapPath)[0:-4]+".zxy"
-            #print destdir
-            if not os.path.isdir(destdir):
-                print command
-                thisone = subprocess.Popen(shlex.split(command), stdout=log)
-                thisone.wait()
-            else:
-                print "this chart has already been tiled"
-        else:
-            print "Something went wrong creating vrt from: " + kapPath
-            sys.exit()
+#    def doTile(self, kapPath, log, regiondir):
+#        header_override = Env.mtcwDir+"header_overrides/NOAA/"+os.path.basename(kapPath)[0:-4]
+#        if Regions._isNOAARegion(self.region) and os.path.isfile(header_override):
+#            override = CreateHeaderOverride.makeHeader(kapPath)
+#            command = "python %smap2gdal.py -q --cut-file --header-file %s %s" %(Env.tilersToolsDir, override, kapPath)
+#        else:   
+#            command = "python %smap2gdal.py -q --cut-file %s" %(Env.tilersToolsDir, kapPath)
+#        #print command
+#        thisone = subprocess.Popen(shlex.split(command), stdout=log)
+#        thisone.wait()
+#        
+#        gmtPath = kapPath[0:-4]+".gmt"
+#        print gmtPath, "\n"
+#        if os.path.isfile(gmtPath):
+#            #--overview-resampling: (choose from 'bilinear', 'nearest', 'near', 'antialias', 'bicubic'
+#            #--base-resampling: (choose from 'bilinear', 'nearest', 'cubic', 'near', 'lanczos', 'cubicspline'
+#            command = "python %sgdal_tiler.py --overview-resampling=bilinear --base-resampling=bilinear -t " %(Env.tilersToolsDir) + regiondir + \
+#                      " --cut --cutline " + gmtPath + " -z " + str(getKapZoom(kapPath)) + " " + kapPath
+#            destdir = regiondir + "/" + os.path.basename(kapPath)[0:-4]+".zxy"
+#            #print destdir
+#            if not os.path.isdir(destdir):
+#                print command
+#                thisone = subprocess.Popen(shlex.split(command), stdout=log)
+#                thisone.wait()
+#            else:
+#                print "this chart has already been tiled"
+#        else:
+#            print "Something went wrong creating vrt from: " + kapPath
+#            sys.exit()
             
     def doTile2(self, kapPath, log, regiondir):
         header_override = Env.mtcwDir+"header_overrides/NOAA/"+os.path.basename(kapPath)[0:-4]
