@@ -114,7 +114,7 @@ class RefPoints(object):
             return self.pixels
         p_dst=self.proj_coords()
         ld(p_dst)
-        pix_tr=MyTransformer(dataset,METHOD='GCP_TPS')
+        pix_tr=MyTransformer(dataset)
         p_pix=pix_tr.transform(p_dst,inv=True)
         ld(p_pix)
         return [(p[0],p[1]) for p in p_pix]
