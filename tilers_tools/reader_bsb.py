@@ -112,13 +112,33 @@ class BsbLayer(SrcLayer):
 
     def get_refs(self):
         'get a list of geo refs in tuples'
+        
+        #---- remove duplicate refs
+        #compensate for NOAA charts having
+        #duplicate REF entries in 2013 catalog
+        
+        refLst = self.hdr_parms2list('REF')
+        
+        unique = []
+        
+        for ref in refLst:
+            u = ref[1:len(ref)]
+            if unique.count(u) != 0:
+                refLst.remove(ref)
+            unique.append(u)
+             
+        for rIndex in range(len(refLst)):
+            refLst[rIndex][0] = str(rIndex+1)
+            
+        #---- 
+        
         refs=LatLonRefPoints(self,[(
             i[0],                                   # id
             (int(i[1]),int(i[2])),                  # pixel
             (float(i[4]),float(i[3]))               # lat/long
-            ) for i in self.hdr_parms2list('REF')])
+            ) for i in refLst])
         return refs
-
+    
     def get_plys(self):
         'boundary polygon'
         plys=RefPoints(self,latlong=[
